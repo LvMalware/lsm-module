@@ -2,6 +2,7 @@ package LSM::Logarithmic;
 use strict;
 use warnings;
 use String::Scanf;
+use List::Util qw(sum);
 use parent 'LSM::Linear';
 
 sub load_file
@@ -32,6 +33,16 @@ sub get_func
 {
     my $self = shift;
     "f(x) = $self->{coef_a}*log(x) + $self->{coef_b}"
+}
+
+sub r_square
+{
+    my $self = shift;
+    my $av_y = sum(values %{$self->{data}}) / scalar %{$self->{data}};
+    my $re_s = sum(map { ($self->evaluate(exp($_)) - $av_y) ** 2 } keys %{$self->{data}});
+    my $to_s = sum(map { ($_ - $av_y) ** 2 } values %{$self->{data}});
+    my $r_sq = $re_s / $to_s;
+    "R² = $r_sq"
 }
 
 1;

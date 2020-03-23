@@ -74,7 +74,8 @@ sub r_square
     my $av_y = sum(values %{$self->{data}}) / scalar %{$self->{data}};
     my $re_s = sum map{($self->evaluate($_) - $av_y)**2} keys %{$self->{data}};
     my $to_s = sum map{($_ - $av_y)**2} values %{$self->{data}};
-    $re_s / $to_s;
+    my $r_sq = $re_s / $to_s;
+    "R² = $r_sq"
 }
 
 1;

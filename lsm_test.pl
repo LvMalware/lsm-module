@@ -15,6 +15,7 @@ my $output_filename;
 my $start_point = 1;
 my $final_point = 5;
 my $display_function;
+my $display_r_square;
 
 GetOptions(
     "all"         => \$all,
@@ -26,7 +27,8 @@ GetOptions(
     "start=i"     => \$start_point,
     "final=i"     => \$final_point,
     "output=s"    => \$output_filename,
-    "display"     => \$display_function
+    "display"     => \$display_function,
+    "r_square"    => \$display_r_square
 );
 
 sub help
@@ -43,6 +45,7 @@ Options:
 -f, --final <point>     Display results until this point (default = 5)
 -o, --output <file>     Save the results into file
 -d, --display           Display the function obtained for each regression
+-r, --r_square          Display the R² adjust metrics for each regression
 -a, --all               Perform all avaiable regressions
 -p, --power             Perform power regression
 -li, --linear           Perform linear regression
@@ -94,5 +97,6 @@ while (my ($name, $reg) = each %regressions)
         print STDOUT $x . "\t" . $reg->evaluate($x) . "\n";
     }
     print STDOUT $reg->get_func() . "\n" if $display_function;
+    print STDOUT $reg->r_square() . "\n" if $display_r_square;
     print STDOUT "="x80 . "\n";
 }
